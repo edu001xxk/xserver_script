@@ -1,0 +1,24 @@
+# 文件名: .github/workflows/keepalive.yml
+name: Keepalive Workflow
+
+on:
+  schedule:
+    # 每天凌晨 0点 (UTC) 运行一次检查。
+    # 插件内部会判断，只有当仓库快连续 50 天没活动时，它才会真正执行一次 dummy commit。
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+# 设置权限，允许工作流推送代码到仓库
+permissions:
+  contents: write
+
+jobs:
+  cronjob-based-github-action:
+    name: Cronjob based github action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/keepalive-workflow@v2
+        with:
+          # true 代表当工作流连续出错时（比如配置错误），也强行制造活动避免被封
+          use_api: true
