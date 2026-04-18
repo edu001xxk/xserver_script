@@ -27,7 +27,7 @@ jobs:
           echo "Last keepalive run: $(date)" > keepalive.log
           
           # 3. 提交并推送到仓库
-          git add keepalive.log
+          git add -f keepalive.log
           # 如果没有任何更改就不提交，避免报错退出 (|| exit 0 是精髓)
           git commit -m "Auto keepalive to prevent suspension" || exit 0
           git push
